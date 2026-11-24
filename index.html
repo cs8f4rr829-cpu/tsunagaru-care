@@ -161,19 +161,29 @@
   }
 
   function speakText() {
-    const text =
-      "つながるケアです。生活、通院と薬、相談、予定、支援中断から選んでください。";
+  const message =
+    "つながるケアです。生活、通院と薬、相談、予定、支援中断から選んでください。";
 
-    
-
-    const voice =
-      new SpeechSynthesisUtterance(text);
-
-    voice.lang = "ja-JP";
-    voice.rate = 0.85;
-
-    speechSynthesis.speak(voice);
+  if (!("speechSynthesis" in window)) {
+    alert("このブラウザでは読み上げ機能が使えません。");
+    return;
   }
+
+  const utterance = new SpeechSynthesisUtterance(message);
+  utterance.lang = "ja-JP";
+  utterance.rate = 0.85;
+  utterance.volume = 1;
+
+  utterance.onstart = function () {
+    alert("読み上げを開始しました。");
+  };
+
+  utterance.onerror = function (event) {
+    alert("読み上げエラー：" + event.error);
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
 </script>
 
 </body>
