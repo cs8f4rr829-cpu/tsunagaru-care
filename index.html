@@ -13,145 +13,168 @@
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+      font-family: -apple-system, BlinkMacSystemFont,
         "Yu Gothic", sans-serif;
       background: #fff8fb;
       color: #333;
     }
 
-    .app {
-      max-width: 520px;
+    main {
+      max-width: 600px;
       margin: auto;
-      padding: 24px 18px 40px;
+      padding: 45px 18px 60px;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
       font-size: 34px;
-      margin: 12px 0 4px;
+      margin: 15px 0 5px;
     }
 
     .subtitle {
-      text-align: center;
       font-size: 20px;
-      margin-bottom: 28px;
+      margin-bottom: 30px;
     }
 
     .message {
       background: white;
-      border-radius: 22px;
-      padding: 20px;
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 22px;
-      line-height: 1.6;
-      box-shadow: 0 3px 14px rgba(0,0,0,.08);
-    }
-
-    .voice {
-      width: 100%;
-      min-height: 76px;
-      border: 0;
-      border-radius: 22px;
-      background: #ffe0ec;
-      font-size: 24px;
-      font-weight: bold;
+      border-radius: 24px;
+      padding: 25px 15px;
+      font-size: 23px;
+      line-height: 1.8;
       margin-bottom: 22px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.05);
     }
 
-    .menu {
-      display: grid;
-      gap: 14px;
-    }
-
-    .menu button {
+    button {
       width: 100%;
       min-height: 88px;
-      border: 0;
-      border-radius: 22px;
+      margin: 9px 0;
+      border: none;
+      border-radius: 24px;
       background: white;
+      color: #078cf0;
       font-size: 25px;
       font-weight: bold;
-      box-shadow: 0 3px 14px rgba(0,0,0,.08);
+      cursor: pointer;
+      box-shadow: 0 5px 18px rgba(0,0,0,.05);
     }
 
-    .menu button:active,
-    .voice:active {
+    button:active {
       transform: scale(.98);
     }
 
+    .voice {
+      background: #ffdce9;
+      margin-bottom: 14px;
+    }
+
     #screen {
-      margin-top: 22px;
-      padding: 22px;
-      min-height: 130px;
-      border-radius: 22px;
+      display: none;
       background: white;
-      font-size: 23px;
+      border-radius: 24px;
+      padding: 28px 18px;
+      margin-top: 22px;
+      font-size: 22px;
       line-height: 1.7;
-      box-shadow: 0 3px 14px rgba(0,0,0,.08);
+      box-shadow: 0 6px 20px rgba(0,0,0,.06);
+    }
+
+    #screen strong {
+      display: block;
+      color: #078cf0;
+      font-size: 27px;
+      margin-bottom: 10px;
+    }
+
+    .back {
+      background: #ffdce9;
+      margin-top: 20px;
     }
   </style>
 </head>
 
 <body>
-  <main class="app">
-    <h1>🌸 つながるケア 🌸</h1>
-    <div class="subtitle">あなたの暮らしを支えるアプリ</div>
 
-    <div class="message">
-      大丈夫。<br>
-      必要なところを押してください。
-    </div>
+<main>
 
-    <button class="voice" onclick="speak()">
-      🔊 読み上げる
+  <h1>🌸 つながるケア 🌸</h1>
+
+  <div class="subtitle">
+    あなたの暮らしを支えるアプリ
+  </div>
+
+  <div class="message">
+    大丈夫。<br>
+    必要なところを押してください。
+  </div>
+
+  <button class="voice" onclick="speakText()">
+    🔊 読み上げる
+  </button>
+
+  <div id="menu">
+
+    <button onclick="openScreen('🏠 生活','毎日の暮らしについて確認できます。')">
+      🏠 生活
     </button>
 
-    <div class="menu">
-      <button onclick="showScreen('🏠 生活', '毎日の暮らしについて確認できます。')">
-        🏠 生活
-      </button>
+    <button onclick="openScreen('💊 通院・薬','通院やお薬について確認できます。')">
+      💊 通院・薬
+    </button>
 
-      <button onclick="showScreen('💊 通院・薬', '通院やお薬について確認できます。')">
-        💊 通院・薬
-      </button>
+    <button onclick="openScreen('💬 相談','困ったことや相談したいことを確認できます。')">
+      💬 相談
+    </button>
 
-      <button onclick="showScreen('💬 相談', '困ったことや相談したいことを確認できます。')">
-        💬 相談
-      </button>
+    <button onclick="openScreen('📅 予定','これからの予定を確認できます。')">
+      📅 予定
+    </button>
 
-      <button onclick="showScreen('📅 予定', 'これからの予定を確認できます。')">
-        📅 予定
-      </button>
+    <button onclick="openScreen('🆘 支援中断','支援が途切れそうなときに使います。')">
+      🆘 支援中断
+    </button>
 
-      <button onclick="showScreen('🆘 支援中断', '支援が途切れそうなときに使います。')">
-        🆘 支援中断
-      </button>
-    </div>
+  </div>
 
-    <div id="screen">
-      ボタンを押すと、ここに内容が表示されます。
-    </div>
-  </main>
+  <div id="screen"></div>
 
-  <script>
-    function showScreen(title, text) {
-      document.getElementById("screen").innerHTML =
-        "<strong>" + title + "</strong><br>" + text;
-    }
+</main>
 
-    function speak() {
-      const text =
-        "つながるケアです。生活、通院と薬、相談、予定、支援中断から選んでください。";
+<script>
+  function openScreen(title, text) {
+    const menu = document.getElementById("menu");
+    const screen = document.getElementById("screen");
 
-      speechSynthesis.cancel();
+    menu.style.display = "none";
+    screen.style.display = "block";
 
-      const voice = new SpeechSynthesisUtterance(text);
-      voice.lang = "ja-JP";
-      voice.rate = 0.85;
+    screen.innerHTML =
+      "<strong>" + title + "</strong>" +
+      "<div>" + text + "</div>" +
+      "<button class='back' onclick='goBack()'>← 戻る</button>";
+  }
 
-      speechSynthesis.speak(voice);
-    }
-  </script>
+  function goBack() {
+    document.getElementById("screen").style.display = "none";
+    document.getElementById("menu").style.display = "block";
+  }
+
+  function speakText() {
+    const text =
+      "つながるケアです。生活、通院と薬、相談、予定、支援中断から選んでください。";
+
+    speechSynthesis.cancel();
+
+    const voice =
+      new SpeechSynthesisUtterance(text);
+
+    voice.lang = "ja-JP";
+    voice.rate = 0.85;
+
+    speechSynthesis.speak(voice);
+  }
+</script>
+
 </body>
 </html>
