@@ -1,12 +1,157 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>つながるケア</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff4f8">
+  <title>つながるケア</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+        "Yu Gothic", sans-serif;
+      background: #fff8fb;
+      color: #333;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: auto;
+      padding: 24px 18px 40px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 34px;
+      margin: 12px 0 4px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 28px;
+    }
+
+    .message {
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 22px;
+      line-height: 1.6;
+      box-shadow: 0 3px 14px rgba(0,0,0,.08);
+    }
+
+    .voice {
+      width: 100%;
+      min-height: 76px;
+      border: 0;
+      border-radius: 22px;
+      background: #ffe0ec;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 22px;
+    }
+
+    .menu {
+      display: grid;
+      gap: 14px;
+    }
+
+    .menu button {
+      width: 100%;
+      min-height: 88px;
+      border: 0;
+      border-radius: 22px;
+      background: white;
+      font-size: 25px;
+      font-weight: bold;
+      box-shadow: 0 3px 14px rgba(0,0,0,.08);
+    }
+
+    .menu button:active,
+    .voice:active {
+      transform: scale(.98);
+    }
+
+    #screen {
+      margin-top: 22px;
+      padding: 22px;
+      min-height: 130px;
+      border-radius: 22px;
+      background: white;
+      font-size: 23px;
+      line-height: 1.7;
+      box-shadow: 0 3px 14px rgba(0,0,0,.08);
+    }
+  </style>
 </head>
+
 <body>
-<h1>🌸 つながるケア 🌸</h1>
-<p>あなたの暮らしを支えるアプリ</p>
+  <main class="app">
+    <h1>🌸 つながるケア 🌸</h1>
+    <div class="subtitle">あなたの暮らしを支えるアプリ</div>
+
+    <div class="message">
+      大丈夫。<br>
+      必要なところを押してください。
+    </div>
+
+    <button class="voice" onclick="speak()">
+      🔊 読み上げる
+    </button>
+
+    <div class="menu">
+      <button onclick="showScreen('🏠 生活', '毎日の暮らしについて確認できます。')">
+        🏠 生活
+      </button>
+
+      <button onclick="showScreen('💊 通院・薬', '通院やお薬について確認できます。')">
+        💊 通院・薬
+      </button>
+
+      <button onclick="showScreen('💬 相談', '困ったことや相談したいことを確認できます。')">
+        💬 相談
+      </button>
+
+      <button onclick="showScreen('📅 予定', 'これからの予定を確認できます。')">
+        📅 予定
+      </button>
+
+      <button onclick="showScreen('🆘 支援中断', '支援が途切れそうなときに使います。')">
+        🆘 支援中断
+      </button>
+    </div>
+
+    <div id="screen">
+      ボタンを押すと、ここに内容が表示されます。
+    </div>
+  </main>
+
+  <script>
+    function showScreen(title, text) {
+      document.getElementById("screen").innerHTML =
+        "<strong>" + title + "</strong><br>" + text;
+    }
+
+    function speak() {
+      const text =
+        "つながるケアです。生活、通院と薬、相談、予定、支援中断から選んでください。";
+
+      speechSynthesis.cancel();
+
+      const voice = new SpeechSynthesisUtterance(text);
+      voice.lang = "ja-JP";
+      voice.rate = 0.85;
+
+      speechSynthesis.speak(voice);
+    }
+  </script>
 </body>
 </html>
