@@ -175,7 +175,7 @@
   utterance.volume = 1;
 
   utterance.onstart = function () {
-    alert("読み上げを開始しました。");
+  //  alert("読み上げを開始しました。");
   };
 
   utterance.onerror = function (event) {
@@ -183,7 +183,7 @@
   };
 
   const voices = window.speechSynthesis.getVoices();
-    alert("使える音声の数：" + voices.length);
+   // alert("使える音声の数：" + voices.length);
     window.speechSynthesis.speak(utterance);
 }
 </script>
