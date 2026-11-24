@@ -182,7 +182,9 @@
     alert("読み上げエラー：" + event.error);
   };
 
-  window.speechSynthesis.speak(utterance);
+  const voices = window.speechSynthesis.getVoices();
+    alert("使える音声の数：" + voices.length);
+    window.speechSynthesis.speak(utterance);
 }
 </script>
 
